@@ -1,17 +1,16 @@
-import js from '@eslint/js'
 import globals from 'globals'
-import tseslint from 'typescript-eslint'
 import pluginVue from 'eslint-plugin-vue'
-import { defineConfig } from 'eslint/config'
+import { globalIgnores } from 'eslint/config'
+import {
+  defineConfigWithVueTs,
+  vueTsConfigs,
+} from '@vue/eslint-config-typescript'
+import skipFormatting from '@vue/eslint-config-prettier/skip-formatting'
 
-export default defineConfig([
+export default defineConfigWithVueTs([
   {
-    ignores: ['dist/**', 'uni_modules/**'],
-  },
-  {
-    files: ['**/*.{js,mjs,cjs,ts,mts,cts,vue}'],
-    plugins: { js },
-    extends: ['js/recommended'],
+    name: 'app/files-to-lint',
+    files: ['**/*.{vue,ts}'],
     languageOptions: {
       globals: {
         ...globals.browser,
@@ -28,12 +27,10 @@ export default defineConfig([
       },
     },
   },
-  tseslint.configs.recommended,
-  pluginVue.configs['flat/essential'],
-  {
-    files: ['**/*.vue'],
-    languageOptions: { parserOptions: { parser: tseslint.parser } },
-  },
+  globalIgnores(['dist/', 'uni_modules/']),
+  ...pluginVue.configs['flat/essential'],
+  vueTsConfigs.recommended,
+  skipFormatting,
   {
     rules: {
       'vue/multi-word-component-names': 'off',
