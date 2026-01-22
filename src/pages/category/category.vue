@@ -1,5 +1,5 @@
 <template>
-  <view class="index">index</view>
+  <view class="category">category</view>
 </template>
 
 <script lang="ts" setup></script>

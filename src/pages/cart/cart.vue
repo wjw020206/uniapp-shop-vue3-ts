@@ -1,5 +1,5 @@
 <template>
-  <view class="index">index</view>
+  <view class="cart">cart</view>
 </template>
 
 <script lang="ts" setup></script>
