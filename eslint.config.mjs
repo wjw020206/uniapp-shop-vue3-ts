@@ -6,6 +6,9 @@ import { defineConfig } from 'eslint/config'
 
 export default defineConfig([
   {
+    ignores: ['dist/**', 'uni_modules/**'],
+  },
+  {
     files: ['**/*.{js,mjs,cjs,ts,mts,cts,vue}'],
     plugins: { js },
     extends: ['js/recommended'],
@@ -30,5 +33,10 @@ export default defineConfig([
   {
     files: ['**/*.vue'],
     languageOptions: { parserOptions: { parser: tseslint.parser } },
+  },
+  {
+    rules: {
+      'vue/multi-word-component-names': 'off',
+    },
   },
 ])
