@@ -76,10 +76,13 @@ const isTriggered = ref(false)
 /** 下拉刷新回调 */
 const onRefresherrefresh = async () => {
   isTriggered.value = true
+  // 重置猜你喜欢组件的数据
+  guessRef.value?.resetData()
   await Promise.all([
     getHomeBannerData(),
     getHomeCategoryData(),
     getHomeHotData(),
+    guessRef.value?.getMore(),
   ])
   isTriggered.value = false
 }
