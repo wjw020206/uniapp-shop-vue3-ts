@@ -8,7 +8,7 @@
       </view>
       <navigator
         hover-class="none"
-        url="/pages/recommend/recommend"
+        :url="`/pages/recommend/recommend?type=${item.type}`"
         class="cards"
       >
         <image
