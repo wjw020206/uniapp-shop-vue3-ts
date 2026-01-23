@@ -1,5 +1,6 @@
 <template>
   <CustomNavbar />
+  <XtxSwiper />
   <view class="index"></view>
 </template>
 
