@@ -7,7 +7,7 @@ import {
 } from '@vue/eslint-config-typescript'
 import skipFormatting from '@vue/eslint-config-prettier/skip-formatting'
 
-export default defineConfigWithVueTs([
+export default defineConfigWithVueTs(
   {
     name: 'app/files-to-lint',
     files: ['**/*.{vue,ts}'],
@@ -36,4 +36,4 @@ export default defineConfigWithVueTs([
       'vue/multi-word-component-names': 'off',
     },
   },
-])
+)
