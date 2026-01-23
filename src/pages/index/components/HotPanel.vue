@@ -23,7 +23,7 @@ defineProps<{
           class="image"
           mode="aspectFit"
           v-for="src in item.pictures"
-          :src
+          :src="src"
           :key="src"
         ></image>
       </navigator>
