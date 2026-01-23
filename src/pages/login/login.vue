@@ -1,5 +1,5 @@
 <template>
-  <view class="my">
+  <view class="login">
     <view>会员信息：{{ memeberStore.profile }}</view>
     <button
       @tap="
@@ -29,7 +29,7 @@ const memeberStore = useMemeberStore()
 const getData = async () => {
   const result = await http<string[]>({
     method: 'GET',
-    url: '',
+    url: '/member/profile',
   })
 
   console.log('请求成功的结果', result)
