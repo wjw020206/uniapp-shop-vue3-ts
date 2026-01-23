@@ -1,11 +1,3 @@
-<script setup lang="ts">
-import type { HotItem } from '@/types/home'
-
-defineProps<{
-  list: HotItem[]
-}>()
-</script>
-
 <template>
   <!-- 推荐专区 -->
   <view class="panel hot">
@@ -30,6 +22,14 @@ defineProps<{
     </view>
   </view>
 </template>
+
+<script setup lang="ts">
+import type { HotItem } from '@/types/home'
+
+defineProps<{
+  list: HotItem[]
+}>()
+</script>
 
 <style lang="scss" scoped>
 .hot {
@@ -61,7 +61,6 @@ defineProps<{
     height: 254rpx;
     border-right: 1rpx solid #eee;
     border-top: 1rpx solid #eee;
-    box-sizing: border-box;
 
     .title {
       justify-content: start;
