@@ -1,7 +1,14 @@
 <template>
   <!-- 自定义导航栏 -->
   <CustomNavbar />
-  <scroll-view class="scroll-view" scroll-y @scrolltolower="onScrolltolower">
+  <scroll-view
+    refresher-enabled
+    class="scroll-view"
+    scroll-y
+    :refresher-triggered="isTriggered"
+    @scrolltolower="onScrolltolower"
+    @refresherrefresh="onRefresherrefresh"
+  >
     <!-- 自定义轮播图 -->
     <XtxSwiper :list="bannerList" />
     <!-- 分类面板 -->
@@ -63,6 +70,18 @@ const guessRef = ref<XtxGuessInstance>()
 /** 滚动触底回调 */
 const onScrolltolower = () => {
   guessRef.value?.getMore()
+}
+/** 下拉刷新状态 */
+const isTriggered = ref(false)
+/** 下拉刷新回调 */
+const onRefresherrefresh = async () => {
+  isTriggered.value = true
+  await Promise.all([
+    getHomeBannerData(),
+    getHomeCategoryData(),
+    getHomeHotData(),
+  ])
+  isTriggered.value = false
 }
 </script>
 
