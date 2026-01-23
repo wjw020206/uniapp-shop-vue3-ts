@@ -6,50 +6,20 @@
       :interval="3000"
       @change="onChange"
     >
-      <swiper-item>
+      <swiper-item v-for="item in list" :key="item.id">
         <navigator
           url="/pages/index/index"
           hover-class="none"
           class="navigator"
         >
-          <image
-            mode="aspectFill"
-            class="image"
-            src="https://pcapi-xiaotuxian-front-devtest.itheima.net/miniapp/uploads/goods_preview_1.jpg"
-          ></image>
-        </navigator>
-      </swiper-item>
-      <swiper-item>
-        <navigator
-          url="/pages/index/index"
-          hover-class="none"
-          class="navigator"
-        >
-          <image
-            mode="aspectFill"
-            class="image"
-            src="https://pcapi-xiaotuxian-front-devtest.itheima.net/miniapp/uploads/goods_preview_2.jpg"
-          ></image>
-        </navigator>
-      </swiper-item>
-      <swiper-item>
-        <navigator
-          url="/pages/index/index"
-          hover-class="none"
-          class="navigator"
-        >
-          <image
-            mode="aspectFill"
-            class="image"
-            src="https://pcapi-xiaotuxian-front-devtest.itheima.net/miniapp/uploads/goods_preview_3.jpg"
-          ></image>
+          <image mode="aspectFill" class="image" :src="item.imgUrl"></image>
         </navigator>
       </swiper-item>
     </swiper>
     <view class="indicator">
       <text
-        v-for="(item, index) in 3"
-        :key="item"
+        v-for="(item, index) in list"
+        :key="item.id"
         class="dot"
         :class="{
           active: index === activeIndex,
@@ -60,10 +30,17 @@
 </template>
 
 <script setup lang="ts">
+import type { BannerItem } from '@/types/home'
 import { ref } from 'vue'
 
+defineProps<{
+  list: BannerItem[]
+}>()
+
+/** 当前展示轮播图的下标 */
 const activeIndex = ref(0)
 
+/** 轮播图切换回调 */
 const onChange: UniHelper.SwiperOnChange = (event) => {
   activeIndex.value = event.detail.current
 }
