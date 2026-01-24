@@ -1,7 +1,7 @@
 <template>
   <view class="viewport">
     <!-- 列表1 -->
-    <view class="list">
+    <view class="list" v-if="memeberStore.profile">
       <navigator
         url="/pagesMember/address/address"
         hover-class="none"
@@ -27,13 +27,33 @@
       <button hover-class="none" class="item arrow">关于小兔鲜儿</button>
     </view>
     <!-- 操作按钮 -->
-    <view class="action">
-      <view class="button">退出登录</view>
+    <view class="action" v-if="memeberStore.profile">
+      <view @tap="onLogout" class="button">退出登录</view>
     </view>
   </view>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useMemeberStore } from '@/store'
+
+const memeberStore = useMemeberStore()
+
+/** 退出登录 */
+const onLogout = () => {
+  uni.showModal({
+    content: '是否退出登录',
+    success: (res) => {
+      // 判断用户是否点击了确定按钮
+      if (res.confirm) {
+        // 清理用户信息
+        memeberStore.clearProfile()
+        // 返回上一页
+        uni.navigateBack()
+      }
+    },
+  })
+}
+</script>
 
 <style lang="scss">
 page {
