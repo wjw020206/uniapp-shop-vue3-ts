@@ -1,3 +1,4 @@
+import type { LoginResult } from '@/types/member'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
@@ -5,11 +6,12 @@ export const useMemeberStore = defineStore(
   'member',
   () => {
     /** 会员信息 */
-    const profile = ref(null)
+    const profile = ref<LoginResult | null>(null)
 
-    /** 保存会员信息 */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const setProfile = (value: any) => {
+    /** 保存会员信息
+     * @param value 会员信息
+     */
+    const setProfile = (value: LoginResult) => {
       profile.value = value
     }
 
@@ -25,6 +27,7 @@ export const useMemeberStore = defineStore(
     }
   },
   {
+    // 小程序端持久化存储配置
     persist: {
       storage: {
         getItem(key) {
