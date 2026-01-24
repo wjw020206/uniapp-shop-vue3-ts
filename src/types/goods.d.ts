@@ -1,3 +1,4 @@
+import type { AddressItem } from './address'
 import type { GoodsItem } from './global'
 
 /** 商品信息 */
