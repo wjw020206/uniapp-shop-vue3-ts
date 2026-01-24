@@ -19,7 +19,6 @@
               <view class="locate"
                 >{{ item.fullLocation }} {{ item.address }}</view
               >
-              <!-- H5 端需添加 .prevent 阻止链接的默认行为 -->
               <navigator
                 class="edit"
                 hover-class="none"
