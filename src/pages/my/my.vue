@@ -1,5 +1,5 @@
 <template>
-  <scroll-view class="viewport" scroll-y>
+  <scroll-view @scrolltolower="onScrolltolower" class="viewport" scroll-y>
     <!-- 个人资料 -->
     <view class="profile" :style="{ paddingTop: safeAreaInsets!.top + 'px' }">
       <!-- 情况1：已登录 -->
@@ -92,6 +92,7 @@
 </template>
 
 <script setup lang="ts">
+import { useGuessList } from '@/composables'
 import { useMemeberStore } from '@/store'
 
 /** 获取屏幕边界到安全区域距离 */
@@ -105,6 +106,9 @@ const orderTypes = [
 ]
 /** 会员信息 */
 const memberStore = useMemeberStore()
+
+// 调用猜你喜欢组合式函数
+const { guessRef, onScrolltolower } = useGuessList()
 </script>
 
 <style lang="scss">
