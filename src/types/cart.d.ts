@@ -33,9 +33,9 @@ export type CartItem = {
   /** 数量 */
   count: number
   /** 加入时价格 */
-  price: number
+  price: string
   /** 当前的价格 */
-  nowPrice: number
+  nowPrice: string
   /** 库存 */
   stock: number
   /** 是否选中 */
