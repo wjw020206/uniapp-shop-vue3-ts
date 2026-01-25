@@ -1,7 +1,7 @@
 <template>
-  <view class="cart">cart</view>
+  <view></view>
 </template>
 
-<script lang="ts" setup></script>
+<script setup lang="ts"></script>
 
-<style lang="scss" scoped></style>
+<style scoped></style>

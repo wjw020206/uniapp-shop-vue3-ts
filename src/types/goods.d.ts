@@ -54,7 +54,7 @@ export type SkuItem = {
   /** sku 图片 */
   picture: string
   /** sku 当前价 */
-  price: number
+  price: string
   /** sku 编码 */
   skuCode: string
   /** 规格集合[ 规格信息 ] */
