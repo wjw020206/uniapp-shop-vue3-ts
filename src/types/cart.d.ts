@@ -12,6 +12,14 @@ export type DeleteCartParams = {
   ids: string[]
 }
 
+/** 修改购物车请求参数 */
+export type PutCartParams = {
+  /** 选中状态 */
+  selected?: boolean
+  /** 购物车数量 */
+  count?: number
+}
+
 /** 购物车类型 */
 export type CartItem = {
   /** 商品 ID */

@@ -1,4 +1,9 @@
-import type { CartItem, CartParams, DeleteCartParams } from '@/types/cart'
+import type {
+  CartItem,
+  CartParams,
+  DeleteCartParams,
+  PutCartParams,
+} from '@/types/cart'
 import { http } from '@/utils/http'
 
 /** 加入购物车
@@ -28,6 +33,18 @@ export const deleteMemberCartAPI = (data: DeleteCartParams) => {
   return http({
     method: 'DELETE',
     url: '/member/cart',
+    data,
+  })
+}
+
+/** 删除/清空购物车单品
+ * @param skuId SKU id
+ * @param data 请求体参数
+ */
+export const putMemberCartBySkuIdAPI = (skuId: string, data: PutCartParams) => {
+  return http({
+    method: 'PUT',
+    url: `/member/cart/${skuId}`,
     data,
   })
 }

@@ -39,13 +39,13 @@
               </navigator>
               <!-- 商品数量 -->
               <view class="count">
-                <text class="text">-</text>
-                <input
-                  class="input"
-                  type="number"
-                  :value="item.count.toString()"
+                <vk-data-input-number-box
+                  v-model="item.count"
+                  :min="1"
+                  :max="item.stock"
+                  :index="item.skuId"
+                  @change="onChangeCount"
                 />
-                <text class="text">+</text>
               </view>
             </view>
             <!-- 右侧删除按钮 -->
@@ -86,7 +86,12 @@
 </template>
 
 <script setup lang="ts">
-import { deleteMemberCartAPI, getMemberCartAPI } from '@/services/cart'
+import type { InputNumberBoxEvent } from '@/components/vk-data-input-number-box/vk-data-input-number-box'
+import {
+  deleteMemberCartAPI,
+  getMemberCartAPI,
+  putMemberCartBySkuIdAPI,
+} from '@/services/cart'
 import { useMemeberStore } from '@/store'
 import type { CartItem } from '@/types/cart'
 import { onShow } from '@dcloudio/uni-app'
@@ -125,6 +130,14 @@ const onDeleteCart = (skuId: string) => {
         getMemberCartData()
       }
     },
+  })
+}
+
+/** 修改商品数量回调 */
+const onChangeCount = async (event: InputNumberBoxEvent) => {
+  if (!event.index) return
+  await putMemberCartBySkuIdAPI(event.index, {
+    count: event.value,
   })
 }
 </script>

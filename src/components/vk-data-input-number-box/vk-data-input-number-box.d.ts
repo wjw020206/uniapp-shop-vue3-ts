@@ -15,17 +15,17 @@ export type InputNumberBoxProps = {
   /** 用户可输入的最大值（默认99999） */
   max: number
   /**  步长，每次加或减的值（默认1） */
-  step: number
+  step?: number
   /** 是否禁用操作，包括输入框，加减按钮 */
-  disabled: boolean
+  disabled?: boolean
   /** 输入框宽度，单位rpx（默认80） */
-  inputWidth: string | number
+  inputWidth?: string | number
   /**  输入框和按钮的高度，单位rpx（默认50） */
-  inputHeight: string | number
+  inputHeight?: string | number
   /** 输入框和按钮的背景颜色（默认#F2F3F5） */
-  bgColor: string
+  bgColor?: string
   /** 步进器标识符 */
-  index: string
+  index?: string
   /** 输入框内容发生变化时触发 */
   onChange?: (event: InputNumberBoxEvent) => void
   /** 输入框失去焦点时触发 */
@@ -41,7 +41,7 @@ export type InputNumberBoxEvent = {
   /** 输入框当前值 */
   value: number
   /** 步进器标识符 */
-  index: string
+  index?: string
 }
 
 /** 全局组件类型声明 */
