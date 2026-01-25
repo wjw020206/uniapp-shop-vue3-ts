@@ -6,6 +6,12 @@ export type CartParams = {
   count: number
 }
 
+/** 删除/清空购物车请求参数 */
+export type DeleteCartParams = {
+  /** 购物车的SKU ID数组 */
+  ids: string[]
+}
+
 /** 购物车类型 */
 export type CartItem = {
   /** 商品 ID */
