@@ -40,3 +40,13 @@ export type OrderPreGoods = {
   /** 小计总价 */
   totalPrice: string
 }
+
+/** 获取立即购买订单参数 */
+export type OrderPreNowParams = {
+  /** 商品 skuId */
+  skuId: string
+  /** 购买商品数量 */
+  count: string
+  /** 下单时已经选择好的地址 id */
+  addressId?: string
+}

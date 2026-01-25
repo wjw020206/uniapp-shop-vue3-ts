@@ -104,7 +104,7 @@
 </template>
 
 <script setup lang="ts">
-import { getMemberOrderPreAPI } from '@/services/order'
+import { getMemberOrderPreAPI, getMemberOrderPreNowAPI } from '@/services/order'
 import { useAddressStore } from '@/store/modules/address'
 import type { OrderPreResult } from '@/types/order'
 import { onLoad } from '@dcloudio/uni-app'
@@ -129,17 +129,33 @@ const onChangeDelivery: UniHelper.SelectorPickerOnChange = (event) => {
   activeIndex.value = event.detail.value
 }
 
+/** 页面参数 */
+const query = defineProps<{
+  skuId?: string
+  count?: string
+}>()
+
 /** 订单信息 */
 const orderPre = ref<OrderPreResult>()
 /** 获取订单信息 */
 const getMemberOrderPreData = async () => {
-  const res = await getMemberOrderPreAPI()
+  let res
+  const { skuId, count } = query
+  if (skuId && count) {
+    res = await getMemberOrderPreNowAPI({
+      skuId,
+      count,
+    })
+  } else {
+    res = await getMemberOrderPreAPI()
+  }
   orderPre.value = res.result
 }
 
 const addressStore = useAddressStore()
 
 onLoad(() => {
+  // 重置之前选择的地址
   addressStore.reset()
   getMemberOrderPreData()
 })

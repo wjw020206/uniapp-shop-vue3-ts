@@ -144,6 +144,7 @@
     }"
     ref="skuPopupRef"
     @add-cart="onAddCart"
+    @buy-now="onBuyNow"
   />
 </template>
 
@@ -266,6 +267,13 @@ const onAddCart = async (event: SkuPopupEvent) => {
     title: '添加成功',
   })
   isShowSku.value = false
+}
+
+/** 立即购买 */
+const onBuyNow = (event: SkuPopupEvent) => {
+  uni.navigateTo({
+    url: `/pagesOrder/create/create?skuId=${event._id}&count=${event.buy_num}`,
+  })
 }
 </script>
 
