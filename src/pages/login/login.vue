@@ -86,10 +86,8 @@ const loginSuccess = (profile: LoginResult) => {
   })
   // 延迟跳转，避免页面切换后销毁导致提示不可见
   setTimeout(() => {
-    // 页面跳转
-    uni.switchTab({
-      url: '/pages/my/my',
-    })
+    // 返回上一页
+    uni.navigateBack()
   }, 500)
 }
 </script>

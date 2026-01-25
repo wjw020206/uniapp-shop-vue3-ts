@@ -1,4 +1,4 @@
-import type { CartParams } from '@/types/cart'
+import type { CartItem, CartParams } from '@/types/cart'
 import { http } from '@/utils/http'
 
 /** 加入购物车
@@ -9,5 +9,14 @@ export const postMemberCartAPI = (data: CartParams) => {
     method: 'POST',
     url: '/member/cart',
     data,
+  })
+}
+
+/** 获取购物车列表
+ */
+export const getMemberCartAPI = () => {
+  return http<CartItem[]>({
+    method: 'GET',
+    url: '/member/cart',
   })
 }
