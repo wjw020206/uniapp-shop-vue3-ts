@@ -21,7 +21,7 @@
       hover-class="none"
       url="/pagesMember/address/address?from=order"
     >
-      <view class="address"> 请选择收货地址 </view>
+      <view class="address">请选择收货地址</view>
       <text class="icon icon-right"></text>
     </navigator>
 
@@ -97,14 +97,22 @@
         orderPre?.summary.totalPayPrice.toFixed(2)
       }}</text>
     </view>
-    <view class="button" :class="{ disabled: !selectAddress?.id }">
+    <view
+      class="button"
+      :class="{ disabled: !selectAddress?.id }"
+      @tap="onOrderSubmit"
+    >
       提交订单
     </view>
   </view>
 </template>
 
 <script setup lang="ts">
-import { getMemberOrderPreAPI, getMemberOrderPreNowAPI } from '@/services/order'
+import {
+  getMemberOrderPreAPI,
+  getMemberOrderPreNowAPI,
+  postMemberOrderAPI,
+} from '@/services/order'
 import { useAddressStore } from '@/store/modules/address'
 import type { OrderPreResult } from '@/types/order'
 import { onLoad } from '@dcloudio/uni-app'
@@ -112,9 +120,9 @@ import { computed, ref } from 'vue'
 
 // 获取屏幕边界到安全区域距离
 const { safeAreaInsets } = uni.getSystemInfoSync()
-// 订单备注
+/** 订单备注 */
 const buyerMessage = ref('')
-// 配送时间
+/** 配送时间 */
 const deliveryList = ref([
   { type: 1, text: '时间不限 (周一至周日)' },
   { type: 2, text: '工作日送 (周一至周五)' },
@@ -171,6 +179,34 @@ const selectAddress = computed(() => {
     orderPre.value?.userAddresses.find((item) => item.isDefault)
   )
 })
+
+/** 提交订单 */
+const onOrderSubmit = async () => {
+  if (!selectAddress.value) {
+    uni.showToast({
+      icon: 'none',
+      title: '请选择收货地址',
+    })
+    return
+  }
+
+  const res = await postMemberOrderAPI({
+    addressId: selectAddress.value.id,
+    buyerMessage: buyerMessage.value,
+    deliveryTimeType: activeDelivery.value!.type,
+    goods: orderPre.value!.goods.map((item) => ({
+      count: item.count,
+      skuId: item.skuId,
+    })),
+    payChannel: 2,
+    payType: 1,
+  })
+
+  // 关闭当前的页面，再跳转到订单的详情，传递订单id
+  uni.redirectTo({
+    url: `/pagesOrder/detail/detail?id=${res.result.id}`,
+  })
+}
 </script>
 
 <style lang="scss">
