@@ -129,7 +129,7 @@ import { computed, ref } from 'vue'
 
 const props = defineProps<{
   /** 是否开启底部安全区 */
-  safeAreaInsetBottom: boolean
+  safeAreaInsetBottom?: boolean
 }>()
 // 获取屏幕边界到安全区域距离
 const { safeAreaInsets } = uni.getSystemInfoSync()
@@ -242,6 +242,7 @@ const gotoPayment = () => {
   }
 
   // 跳转到结算页面
+  uni.navigateTo({ url: '/pagesOrder/create/create' })
 }
 
 const { guessRef, onScrolltolower } = useGuessList()

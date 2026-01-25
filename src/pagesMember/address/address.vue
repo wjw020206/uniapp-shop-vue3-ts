@@ -10,7 +10,7 @@
             v-for="item in addressList"
             :key="item.id"
           >
-            <view class="item-content">
+            <view class="item-content" @tap="onChangeAddress(item)">
               <view class="user">
                 {{ item.receiver }}
                 <text class="contact">{{ item.contact }}</text>
@@ -23,6 +23,7 @@
                 class="edit"
                 hover-class="none"
                 :url="`/pagesMember/address-form/address-form?id=${item.id}`"
+                @tap.stop
               >
                 修改
               </navigator>
@@ -55,6 +56,7 @@ import {
   deleteMemberAddressByIdAPI,
   getMemberAddressAPI,
 } from '@/services/address'
+import { useAddressStore } from '@/store/modules/address'
 import type { AddressItem } from '@/types/address'
 import { onShow } from '@dcloudio/uni-app'
 import { ref } from 'vue'
@@ -84,6 +86,15 @@ const onDeleteAddress = (id: string) => {
       }
     },
   })
+}
+
+// 修改收货地址
+const onChangeAddress = (item: AddressItem) => {
+  // 修改地址
+  const addressStore = useAddressStore()
+  addressStore.changeSelectedAddress(item)
+  // 返回上一页
+  uni.navigateBack()
 }
 </script>
 
