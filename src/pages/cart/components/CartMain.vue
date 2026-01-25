@@ -1,5 +1,10 @@
 <template>
-  <scroll-view scroll-y class="scroll-view">
+  <scroll-view
+    scroll-y
+    class="scroll-view"
+    @scrolltolower="onScrolltolower"
+    :style="safeAreaStyle"
+  >
     <!-- 已登录: 显示购物车 -->
     <template v-if="memberStore.profile">
       <!-- 购物车列表 -->
@@ -75,7 +80,7 @@
         </navigator>
       </view>
       <!-- 吸底工具栏 -->
-      <view class="toolbar">
+      <view class="toolbar" :style="safeAreaStyle">
         <text
           @tap="onChangeSelectAll"
           class="all"
@@ -110,6 +115,7 @@
 
 <script setup lang="ts">
 import type { InputNumberBoxEvent } from '@/components/vk-data-input-number-box/vk-data-input-number-box'
+import { useGuessList } from '@/composables'
 import {
   deleteMemberCartAPI,
   getMemberCartAPI,
@@ -120,6 +126,21 @@ import { useMemeberStore } from '@/store'
 import type { CartItem } from '@/types/cart'
 import { onShow } from '@dcloudio/uni-app'
 import { computed, ref } from 'vue'
+
+const props = defineProps<{
+  /** 是否开启底部安全区 */
+  safeAreaInsetBottom: boolean
+}>()
+// 获取屏幕边界到安全区域距离
+const { safeAreaInsets } = uni.getSystemInfoSync()
+/** 安全区域样式 */
+const safeAreaStyle = computed(() => {
+  return {
+    paddingBottom: props.safeAreaInsetBottom
+      ? safeAreaInsets?.bottom + 'px'
+      : 0,
+  }
+})
 
 const memberStore = useMemeberStore()
 
@@ -222,6 +243,8 @@ const gotoPayment = () => {
 
   // 跳转到结算页面
 }
+
+const { guessRef, onScrolltolower } = useGuessList()
 </script>
 
 <style lang="scss">

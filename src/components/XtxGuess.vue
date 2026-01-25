@@ -38,7 +38,7 @@ const guessList = ref<GuessItem[]>([])
 /** 加载结束标志 */
 const finish = ref(false)
 /** 是否正在加载数据中 */
-const isLoading = ref(false)
+let isLoading = false
 /** 获取猜你喜欢数据 */
 const getHomeGoodsGuessLikeData = async () => {
   if (finish.value) {
@@ -50,13 +50,13 @@ const getHomeGoodsGuessLikeData = async () => {
   }
 
   // 避免上次数据未加载完成时再次请求
-  if (isLoading.value) return
+  if (isLoading) return
 
-  isLoading.value = true
+  isLoading = true
 
   const res = await getHomeGoodsGuessLikeAPI(pageParams)
 
-  isLoading.value = false
+  isLoading = false
 
   // 分页数据追加
   guessList.value.push(...res.result.items)
