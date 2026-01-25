@@ -6,33 +6,82 @@
     <view class="title">配送至</view>
     <!-- 内容 -->
     <view class="content">
-      <view class="item">
-        <view class="user">李明 13824686868</view>
-        <view class="address">北京市顺义区后沙峪地区安平北街6号院</view>
-        <text class="icon icon-checked"></text>
-      </view>
-      <view class="item">
-        <view class="user">王东 13824686868</view>
-        <view class="address">北京市顺义区后沙峪地区安平北街6号院</view>
-        <text class="icon icon-ring"></text>
-      </view>
-      <view class="item">
-        <view class="user">张三 13824686868</view>
-        <view class="address">北京市朝阳区孙河安平北街6号院</view>
-        <text class="icon icon-ring"></text>
+      <view
+        class="item"
+        v-for="item in addressList"
+        :key="item.id"
+        @tap="selectedAddress = item"
+      >
+        <view class="user">{{ item.receiver }} {{ item.contact }}</view>
+        <view class="address">{{ item.fullLocation }}{{ item.address }}</view>
+        <text
+          class="icon"
+          :class="{
+            'icon-checked': selectedAddress?.id === item.id,
+          }"
+        ></text>
       </view>
     </view>
     <view class="footer">
-      <view class="button primary">新建地址</view>
-      <view v-if="false" class="button primary">确定</view>
+      <navigator
+        hover-class="none"
+        class="button secondary"
+        url="/pagesMember/address-form/address-form"
+        >新建地址</navigator
+      >
+      <view
+        v-if="addressList.length > 0"
+        class="button primary"
+        @tap="onConfirmAddress"
+        >确定</view
+      >
     </view>
   </view>
 </template>
 
 <script setup lang="ts">
+import { useAddress } from '@/composables/use-address'
+import { useAddressStore } from '@/store/modules/address'
+import type { AddressItem } from '@/types/address'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
+
 const emit = defineEmits<{
   (event: 'close'): void
 }>()
+
+const addressStore = useAddressStore()
+/** 选择的地址 */
+const selectedAddress = ref<AddressItem | null>(null)
+/** 确定选择的地址 */
+const onConfirmAddress = () => {
+  if (!selectedAddress.value) {
+    uni.showToast({
+      icon: 'none',
+      title: '请选择地址',
+    })
+    return
+  }
+  addressStore.changeSelectedAddress(selectedAddress.value)
+  emit('close')
+}
+
+const { addressList, getMemberAddressData } = useAddress()
+
+/** 初始化选中的地址 */
+const initSelectAddress = async () => {
+  await getMemberAddressData()
+  // 默认选择默认地址，如果没有默认地址就不选择
+  selectedAddress.value = addressStore.selectedAddress
+    ? addressStore.selectedAddress
+    : addressList.value.find((item) => item.isDefault) || null
+}
+onMounted(async () => {
+  await initSelectAddress()
+  uni.$on('updateAddress', initSelectAddress)
+})
+onBeforeUnmount(() => {
+  uni.$off('updateAddress', initSelectAddress)
+})
 </script>
 
 <style lang="scss">

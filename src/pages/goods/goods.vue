@@ -39,7 +39,7 @@
         </view>
         <view @tap="openPopup('address')" class="item arrow">
           <text class="label">送至</text>
-          <text class="text ellipsis">请选择收获地址</text>
+          <text class="text ellipsis">{{ selectAddress }}</text>
         </view>
         <view @tap="openPopup('service')" class="item arrow">
           <text class="label">服务</text>
@@ -161,6 +161,7 @@ import type {
   SkuPopupLocaldata,
 } from '@/components/vk-data-goods-sku-popup/vk-data-goods-sku-popup'
 import { postMemberCartAPI } from '@/services/cart'
+import { useAddressStore } from '@/store/modules/address'
 
 /** 获取屏幕边界到安全区域距离 */
 const { safeAreaInsets } = uni.getSystemInfoSync()
@@ -268,6 +269,12 @@ const onAddCart = async (event: SkuPopupEvent) => {
   })
   isShowSku.value = false
 }
+
+const addressStore = useAddressStore()
+/** 计算选中的地址 */
+const selectAddress = computed(() => {
+  return addressStore.selectedAddress?.fullLocation || '请选择收获地址'
+})
 
 /** 立即购买 */
 const onBuyNow = (event: SkuPopupEvent) => {

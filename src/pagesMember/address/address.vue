@@ -52,22 +52,13 @@
 </template>
 
 <script setup lang="ts">
-import {
-  deleteMemberAddressByIdAPI,
-  getMemberAddressAPI,
-} from '@/services/address'
+import { useAddress } from '@/composables/use-address'
+import { deleteMemberAddressByIdAPI } from '@/services/address'
 import { useAddressStore } from '@/store/modules/address'
 import type { AddressItem } from '@/types/address'
 import { onShow } from '@dcloudio/uni-app'
-import { ref } from 'vue'
 
-/** 收货地址列表数据 */
-const addressList = ref<AddressItem[]>([])
-/** 获取收货地址列表数据 */
-const getMemberAddressData = async () => {
-  const res = await getMemberAddressAPI()
-  addressList.value = res.result
-}
+const { getMemberAddressData, addressList } = useAddress()
 
 onShow(() => {
   getMemberAddressData()

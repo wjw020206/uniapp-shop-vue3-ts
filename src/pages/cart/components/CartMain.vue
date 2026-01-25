@@ -115,7 +115,7 @@
 
 <script setup lang="ts">
 import type { InputNumberBoxEvent } from '@/components/vk-data-input-number-box/vk-data-input-number-box'
-import { useGuessList } from '@/composables'
+import { useGuessList } from '@/composables/use-guess-list'
 import {
   deleteMemberCartAPI,
   getMemberCartAPI,

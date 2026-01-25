@@ -36,7 +36,7 @@ import type { BannerItem, CategoryItem, HotItem } from '@/types/home'
 import CategoryPanel from './components/CategoryPanel.vue'
 import HotPanel from './components/HotPanel.vue'
 import PageSkeleton from './components/PageSkeleton.vue'
-import { useGuessList } from '@/composables'
+import { useGuessList } from '@/composables/use-guess-list'
 
 /** 轮播图数据 */
 const bannerList = ref<BannerItem[]>([])

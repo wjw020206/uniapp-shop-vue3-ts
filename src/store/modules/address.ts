@@ -7,7 +7,7 @@ export const useAddressStore = defineStore('address', () => {
   const selectedAddress = ref<AddressItem | null>(null)
 
   /** 改变选中的地址 */
-  const changeSelectedAddress = (value: AddressItem) => {
+  const changeSelectedAddress = (value: AddressItem | null) => {
     selectedAddress.value = value
   }
 

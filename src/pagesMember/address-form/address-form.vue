@@ -178,6 +178,8 @@ const onSubmit = async () => {
       await postMemberAddressAPI(form.value)
     }
 
+    uni.$emit('updateAddress')
+
     // 成功提示
     uni.showToast({
       icon: 'success',

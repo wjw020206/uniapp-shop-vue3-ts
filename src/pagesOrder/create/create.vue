@@ -155,8 +155,12 @@ const getMemberOrderPreData = async () => {
 const addressStore = useAddressStore()
 
 onLoad(() => {
-  // 重置之前选择的地址
-  addressStore.reset()
+  const { skuId, count } = query
+  // 判断是否是从购物车页面进入的
+  if (!skuId && !count) {
+    // 重置之前选择的地址
+    addressStore.reset()
+  }
   getMemberOrderPreData()
 })
 

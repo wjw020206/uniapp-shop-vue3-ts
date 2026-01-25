@@ -92,7 +92,7 @@
 </template>
 
 <script setup lang="ts">
-import { useGuessList } from '@/composables'
+import { useGuessList } from '@/composables/use-guess-list'
 import { useMemeberStore } from '@/store'
 
 /** 获取屏幕边界到安全区域距离 */
