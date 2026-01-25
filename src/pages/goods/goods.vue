@@ -35,7 +35,7 @@
       <view class="action">
         <view @tap="openSkuPopup(SkuMode.Both)" class="item arrow">
           <text class="label">选择</text>
-          <text class="text ellipsis">请选择商品规格</text>
+          <text class="text ellipsis">{{ selectArrText }}</text>
         </view>
         <view @tap="openPopup('address')" class="item arrow">
           <text class="label">送至</text>
@@ -139,6 +139,13 @@
     :mode="mode"
     add-cart-background-color="#ffa868"
     buy-now-background-color="#27ba9b"
+    :actived-style="{
+      color: '#27ba9b',
+      borderColor: '#27ba9b',
+      backgrondColor: '#e9f8f5',
+    }"
+    ref="skuPopupRef"
+    @add-cart="onAddCart"
   />
 </template>
 
@@ -146,10 +153,15 @@
 import { getGoodsByIdAPI } from '@/services/goods'
 import type { GoodsResult } from '@/types/goods'
 import { onLoad } from '@dcloudio/uni-app'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import AddressPanel from './components/AddressPanel.vue'
 import ServicePanel from './components/ServicePanel.vue'
-import type { SkuPopupLocaldata } from '@/components/vk-data-goods-sku-popup/vk-data-goods-sku-popup'
+import type {
+  SkuPopupEvent,
+  SkuPopupInstance,
+  SkuPopupLocaldata,
+} from '@/components/vk-data-goods-sku-popup/vk-data-goods-sku-popup'
+import { postMemberCartAPI } from '@/services/cart'
 
 /** 获取屏幕边界到安全区域距离 */
 const { safeAreaInsets } = uni.getSystemInfoSync()
@@ -239,6 +251,23 @@ const openSkuPopup = (value: SkuMode) => {
   // 显示 SKU 组件
   isShowSku.value = true
   mode.value = value
+}
+/** SKU 组件实例 */
+const skuPopupRef = ref<SkuPopupInstance>()
+/** 计算被选中的值 */
+const selectArrText = computed(() => {
+  return skuPopupRef.value?.selectArr?.join(' ').trim() || '请选择商品规格'
+})
+/** 加入购物车事件 */
+const onAddCart = async (event: SkuPopupEvent) => {
+  await postMemberCartAPI({
+    skuId: event._id,
+    count: event.buy_num,
+  })
+  uni.showToast({
+    title: '添加成功',
+  })
+  isShowSku.value = false
 }
 </script>
 
