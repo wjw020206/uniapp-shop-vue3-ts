@@ -20,7 +20,11 @@
             <!-- 商品信息 -->
             <view class="goods">
               <!-- 选中状态 -->
-              <text class="checkbox" :class="{ checked: item.selected }"></text>
+              <text
+                @tap="onChangeSelected(item)"
+                class="checkbox"
+                :class="{ checked: item.selected }"
+              ></text>
               <navigator
                 :url="`/pages/goods/goods?id=${item.id}`"
                 hover-class="none"
@@ -70,6 +74,20 @@
           <button class="button">去首页看看</button>
         </navigator>
       </view>
+      <!-- 吸底工具栏 -->
+      <view class="toolbar">
+        <text
+          @tap="onChangeSelectAll"
+          class="all"
+          :class="{ checked: isSelectedAll }"
+          >全选</text
+        >
+        <text class="text">合计:</text>
+        <text class="amount">100</text>
+        <view class="button-grounp">
+          <view class="button payment-button">去结算(10)</view>
+        </view>
+      </view>
     </template>
     <!-- 未登录: 提示登录 -->
     <view class="login-blank" v-else>
@@ -91,11 +109,12 @@ import {
   deleteMemberCartAPI,
   getMemberCartAPI,
   putMemberCartBySkuIdAPI,
+  putMemberCartSelectedAPI,
 } from '@/services/cart'
 import { useMemeberStore } from '@/store'
 import type { CartItem } from '@/types/cart'
 import { onShow } from '@dcloudio/uni-app'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 const memberStore = useMemeberStore()
 
@@ -139,6 +158,34 @@ const onChangeCount = async (event: InputNumberBoxEvent) => {
   await putMemberCartBySkuIdAPI(event.index, {
     count: event.value,
   })
+}
+
+/** 修改选中状态-单品修改 */
+const onChangeSelected = async (item: CartItem) => {
+  /** 前端数据更新 */
+  item.selected = !item.selected
+  /** 后端数据更新 */
+  await putMemberCartBySkuIdAPI(item.skuId, {
+    selected: item.selected,
+  })
+}
+
+/** 计算全选状态 */
+const isSelectedAll = computed(() => {
+  const cartListVal = cartList.value
+  return cartListVal.length && cartListVal.every((item) => item.selected)
+})
+
+/** 修改选中状态-全选修改 */
+const onChangeSelectAll = () => {
+  // 全选状态取反
+  const _isSelectedAll = !isSelectedAll.value
+  // 前端数据更新
+  cartList.value.forEach((item) => {
+    item.selected = _isSelectedAll
+  })
+  // 后端数据更新
+  putMemberCartSelectedAPI(_isSelectedAll)
 }
 </script>
 
