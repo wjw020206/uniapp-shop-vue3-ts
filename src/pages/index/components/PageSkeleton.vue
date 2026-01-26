@@ -279,20 +279,18 @@
         </view>
       </view>
     </view>
-    <view class="r r">
-      <view
-        class="caption XtxGuess--caption data-v-e94a02da XtxGuess--data-v-e94a02da"
-      >
-        <text
-          class="text XtxGuess--text data-v-e94a02da XtxGuess--data-v-e94a02da sk-transparent sk-text-0-0000-274 sk-text sk-pseudo sk-pseudo-circle"
-          >猜你喜欢</text
-        >
-      </view>
-    </view>
   </view>
 </template>
 
 <style lang="scss" scoped>
+/* #ifdef H5 || APP-PLUS */
+/* 修复 H5 端骨架屏样式异常 */
+/* 原因：H5 端样式自动开启 scoped 隔离，导致骨架屏的基础样式被隔离 */
+@import '../styles/hot.scss';
+@import '../styles/category.scss';
+@import '@/components/styles/XtxSwiper.scss';
+/* #endif */
+
 .sk-transparent {
   color: transparent !important;
 }
