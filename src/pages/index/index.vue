@@ -95,7 +95,10 @@ const onRefresherrefresh = async () => {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+/* #ifdef APP-PLUS */
+#app,
+/* #endif */
 page {
   display: flex;
   flex-direction: column;
