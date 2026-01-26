@@ -27,7 +27,7 @@ export default defineConfigWithVueTs(
       },
     },
   },
-  globalIgnores(['dist/', 'uni_modules/']),
+  globalIgnores(['dist/', '**/uni_modules/']),
   ...pluginVue.configs['flat/essential'],
   vueTsConfigs.recommended,
   skipFormatting,

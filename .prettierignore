@@ -2,3 +2,5 @@
 .husky
 .vscode
 manifest.json
+uniCloud
+uni_modules

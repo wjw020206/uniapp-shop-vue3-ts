@@ -18,8 +18,9 @@
           v-model="form.contact"
         />
       </uni-forms-item>
-      <uni-forms-item name="fullLocation" class="form-item">
+      <uni-forms-item name="countyCode" class="form-item">
         <text class="label">所在地区</text>
+        <!-- #ifdef MP-WEIXIN -->
         <picker
           class="picker"
           mode="region"
@@ -29,6 +30,23 @@
           <view v-if="form.fullLocation">{{ form.fullLocation }}</view>
           <view v-else class="placeholder">请选择省/市/区(县)</view>
         </picker>
+        <!-- #endif -->
+        <!-- #ifdef H5 || APP-PLUS -->
+        <uni-data-picker
+          placeholder="请选择地址"
+          popup-title="请选择城市"
+          collection="opendb-city-china"
+          field="code as value, name as text"
+          orderby="value asc"
+          :step-searh="true"
+          self-field="code"
+          parent-field="parent_code"
+          :clear-icon="false"
+          @change="onCityChange"
+          v-model="form.countyCode"
+        >
+        </uni-data-picker>
+        <!-- #endif -->
       </uni-forms-item>
       <uni-forms-item name="address" class="form-item">
         <text class="label">详细地址</text>
@@ -107,17 +125,33 @@ uni.setNavigationBarTitle({
 })
 
 /** 收集所在地区 */
+// #ifdef MP-WEIXIN
 const onRegionChange: UniHelper.RegionPickerOnChange = (event) => {
   // 省市区（前端展示）
   form.value.fullLocation = event.detail.value.join(' ')
   // 省市区（后端参数）
   const [provinceCode, cityCode, countyCode] = event.detail.code!
+  // 合并数据
   Object.assign(form.value, {
     provinceCode,
     cityCode,
     countyCode,
   })
 }
+// #endif
+
+// #ifdef H5 || APP-PLUS
+const onCityChange: UniHelper.UniDataPickerOnChange = (event) => {
+  const code = event.detail.value.map((item) => item.value)
+  const [provinceCode, cityCode, countyCode] = code
+  // 合并数据
+  Object.assign(form.value, {
+    provinceCode,
+    cityCode,
+    countyCode,
+  })
+}
+// #endif
 
 /** 收集是否默认收货地址 */
 const onSwitchChange: UniHelper.SwitchOnChange = (event) => {
@@ -146,7 +180,7 @@ const rules: UniHelper.UniFormsRules = {
       },
     ],
   },
-  fullLocation: {
+  countyCode: {
     rules: [
       {
         required: true,
