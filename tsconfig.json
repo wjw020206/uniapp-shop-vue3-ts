@@ -8,8 +8,9 @@
     },
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "types": [
+      "@dcloudio/types",
       "@uni-helper/uni-app-types",
-      "@types/wechat-miniprogram",
+      "miniprogram-api-typings",
       "@uni-helper/uni-ui-types"
     ]
   },

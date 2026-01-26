@@ -1,11 +1,11 @@
 import { http } from '@/utils/http'
-import type { LoginParams } from '@/types/login'
+import type { H5LoginParams, WxLoginParams } from '@/types/login'
 import type { LoginResult } from '@/types/member'
 
 /** 小程序登录
  * @param data 请求参数
  */
-export const postLoginWxMinAPI = (data: LoginParams) => {
+export const postLoginWxMinAPI = (data: WxLoginParams) => {
   return http<LoginResult>({
     method: 'POST',
     url: '/login/wxMin',
@@ -23,5 +23,17 @@ export const postLoginWxMinSimpleAPI = (phoneNumber: string) => {
     data: {
       phoneNumber,
     },
+  })
+}
+
+/**
+ * 传统登录-用户名+密码
+ * @param data 请求参数
+ */
+export const postLoginAPI = (data: H5LoginParams) => {
+  return http<LoginResult>({
+    method: 'POST',
+    url: '/login',
+    data,
   })
 }

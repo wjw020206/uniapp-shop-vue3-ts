@@ -87,9 +87,6 @@ importers:
       '@dcloudio/vite-plugin-uni':
         specifier: 3.0.0-4080720251210001
         version: 3.0.0-4080720251210001(postcss@8.5.6)(rollup@4.56.0)(vite@5.2.8(@types/node@25.0.10)(sass@1.45.0)(terser@5.46.0))(vue@3.5.27(typescript@5.9.3))
-      '@types/wechat-miniprogram':
-        specifier: ^3.4.9
-        version: 3.4.9
       '@uni-helper/uni-app-types':
         specifier: 1.0.0-alpha.7
         version: 1.0.0-alpha.7(typescript@5.9.3)(vue@3.5.27(typescript@5.9.3))
@@ -123,6 +120,9 @@ importers:
       lint-staged:
         specifier: ^16.2.7
         version: 16.2.7
+      miniprogram-api-typings:
+        specifier: ^5.0.0
+        version: 5.0.0
       prettier:
         specifier: 3.8.1
         version: 3.8.1
@@ -1565,9 +1565,6 @@ packages:
 
   '@types/stack-utils@2.0.3':
     resolution: {integrity: sha512-9aEbYZ3TbYMznPdcdr3SmIrLXwC/AKZXQeCf9Pgao5CKb8CyHuEX5jzWPTkvregvhRJHcpRO6BFoGW9ycaOkYw==}
-
-  '@types/wechat-miniprogram@3.4.9':
-    resolution: {integrity: sha512-3JONYYpeOnpu507qv9eOZpiF2DIrb6MTM8iYxGE8wjttBa6NOrhxNJdlvGONTx9vVV7jbFAs472qcK2s2C37VA==}
 
   '@types/yargs-parser@21.0.3':
     resolution: {integrity: sha512-I4q9QU9MQv4oEOz4tAHJtNz1cwuLxn2F3xcc2iV5WdqLPpUnj30aUuxt1mAxYTG+oe8CZMV/+6rU4S4gRDzqtQ==}
@@ -3203,6 +3200,9 @@ packages:
 
   minimist@1.2.8:
     resolution: {integrity: sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==}
+
+  miniprogram-api-typings@5.0.0:
+    resolution: {integrity: sha512-KQ1ZDk0cK3JrAaZtlFNlC/De/HwqhtToPZTzIYvFzi4FaW0Z8raIBN/qpjZ5QMiBaBNl/hJwTWwD+tfp8BwCZw==}
 
   mitt@3.0.1:
     resolution: {integrity: sha512-vKivATfr97l2/QBCYAkXYDbrIWPM2IIKEl7YPhjCvKlG3kE2gm+uBo6nEXK3M5/Ffh/FLpKExzOQ3JJoJGFKBw==}
@@ -6474,8 +6474,6 @@ snapshots:
 
   '@types/stack-utils@2.0.3': {}
 
-  '@types/wechat-miniprogram@3.4.9': {}
-
   '@types/yargs-parser@21.0.3': {}
 
   '@types/yargs@16.0.11':
@@ -8441,6 +8439,8 @@ snapshots:
       brace-expansion: 2.0.2
 
   minimist@1.2.8: {}
+
+  miniprogram-api-typings@5.0.0: {}
 
   mitt@3.0.1: {}
 

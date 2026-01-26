@@ -11,6 +11,7 @@
       </navigator>
     </view>
     <!-- 列表2 -->
+    <!-- #ifdef MP-WEIXIN -->
     <view class="list">
       <button hover-class="none" class="item arrow" open-type="openSetting">
         授权管理
@@ -22,6 +23,8 @@
         联系我们
       </button>
     </view>
+    <!-- #endif -->
+
     <!-- 列表3 -->
     <view class="list">
       <button hover-class="none" class="item arrow">关于小兔鲜儿</button>
