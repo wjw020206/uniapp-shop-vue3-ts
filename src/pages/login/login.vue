@@ -7,7 +7,7 @@
     </view>
     <view class="login">
       <!-- 网页端表单登录 -->
-      <!-- #ifdef H5 -->
+      <!-- #ifdef H5 || APP-PLUS -->
       <input
         v-model="form.account"
         class="input"
@@ -26,14 +26,16 @@
 
       <!-- 小程序端授权登录 -->
       <!-- #ifdef MP-WEIXIN -->
-      <button
-        class="button phone"
-        open-type="getPhoneNumber"
-        @getphonenumber="onGetphonenumber"
-      >
-        <text class="icon icon-phone"></text>
-        手机号快捷登录
-      </button>
+      <view class="button-privacy-wrap">
+        <button
+          class="button phone"
+          open-type="getPhoneNumber"
+          @getphonenumber="onGetphonenumber"
+        >
+          <text class="icon icon-phone"></text>
+          手机号快捷登录
+        </button>
+      </view>
       <!-- #endif -->
       <view class="extra">
         <view class="caption">
@@ -91,8 +93,8 @@ onLoad(async () => {
 
 /** 获取用户手机号码(需要企业认证的小程序才能使用) */
 const onGetphonenumber: UniHelper.ButtonOnGetphonenumber = async (event) => {
-  const encryptedData = event.detail?.encryptedData
-  const iv = event.detail?.iv
+  await checkedAgreePrivacy()
+  const { encryptedData, iv } = event.detail
 
   // 判断加密数据和加密算法的初始向量是否存在
   if (encryptedData && iv) {
@@ -113,6 +115,7 @@ const onGetphonenumber: UniHelper.ButtonOnGetphonenumber = async (event) => {
 
 /** 模拟手机号码快捷登录（开发练习） */
 const onGetphonenumberSimple = async () => {
+  await checkedAgreePrivacy()
   const res = await postLoginWxMinSimpleAPI('13123456789')
   loginSuccess(res.result)
 }
@@ -134,7 +137,7 @@ const loginSuccess = (profile: LoginResult) => {
   }, 500)
 }
 
-// #ifdef H5
+// #ifdef H5 || APP-PLUS
 // 传统表单登录，测试账号：13123456789 密码：123456，测试账号仅开发学习使用。
 const form = ref<H5LoginParams>({
   account: '13123456789',

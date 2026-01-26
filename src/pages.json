@@ -50,6 +50,12 @@
       }
     },
     {
+      "path": "pages/login/protocal",
+      "style": {
+        "navigationBarTitleText": "用户服务协议"
+      }
+    },
+    {
       "path": "pages/recommend/recommend",
       "style": {
         "navigationBarTitleText": "热门推荐"
