@@ -540,8 +540,7 @@ page {
     display: flex;
     align-items: center;
     flex: 1;
-    // 兼容 H5 端和 App 端的导航链接样式
-    .navigator-wrap,
+
     .icons-button {
       flex: 1;
       text-align: center;
